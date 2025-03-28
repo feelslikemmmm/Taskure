@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/styles/themeProvider';
-import Header from '@/components/home/Header';
+import AuthProvider from '@/components/auth/AuthProvider';
+import AuthRouteProtector from '@/components/auth/AuthRouteProtector';
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter', // ⬅️ 이 부분이 핵심
+  variable: '--font-inter',
   display: 'swap',
 });
 
@@ -29,7 +30,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          <AuthProvider />
+          <AuthRouteProtector />
           {children}
         </ThemeProvider>
       </body>
