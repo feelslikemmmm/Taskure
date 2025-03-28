@@ -206,3 +206,14 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+.draggable {
+  cursor: grab;
+}
+.draggable:active {
+  cursor: grabbing;
+}
