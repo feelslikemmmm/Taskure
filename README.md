@@ -1,37 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🗂️ Taskure
 
-## Getting Started
+**Taskure**는 효율적인 팀 협업과 개인 프로젝트 관리를 위한 **태스크 관리 웹앱**입니다.  
+할 일(Task)을 프로젝트별로 정리하고, 드래그 앤 드롭으로 직관적으로 관리하세요.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Preview
+![taskure](https://github.com/user-attachments/assets/b8e33f7b-ddfc-430d-9124-51db531b387b)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> 직관적인 UI와 실시간 동기화로 생산성을 높이세요.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 주요 기능
 
-## Learn More
+- ✅ 이메일 / Google 로그인 지원
+- 🧠 프로젝트별 Task 그룹 관리
+- 📝 Task 추가 / 수정 / 삭제
+- 📌 드래그 앤 드롭 지원
+- 📊 실시간 동기화 (Firebase 기반)
+  
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 데모 링크
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+👉 준비중
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 기술 스택
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Frontend:** Next.js 15, TypeScript, Tailwind CSS, shadcn/ui
+- **Auth:** Firebase Authentication
+- **Database:** Firebase Firestore
+- **State Management:** React Query, Zustand
+- **DND:** @dnd-kit/sortable
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Taskure
+---
+
