@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/styles/themeProvider';
 import AuthProvider from '@/components/auth/AuthProvider';
 import AuthRouteProtector from '@/components/auth/AuthRouteProtector';
+import QueryProvider from '@/components/query/QueryProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -30,9 +31,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider />
-          <AuthRouteProtector />
-          {children}
+          <QueryProvider>
+            <AuthProvider />
+            <AuthRouteProtector />
+            {children}
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
