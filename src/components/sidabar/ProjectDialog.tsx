@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/dialog';
 import { useUserStore } from '@/lib/store';
 import useProjects from '@/hooks/useProjects';
-import { colorOptions } from '@/constants/colorOptions';
+import { COLOR_OPTIONS } from '@/constants/colorOptions';
 
 interface CreateProjectDialogProps {
   open: boolean;
@@ -29,7 +29,9 @@ export default function ProjectDialog({
 }: CreateProjectDialogProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [selectedColor, setSelectedColor] = useState(colorOptions[0]);
+  const [selectedColor, setSelectedColor] = useState<
+    (typeof COLOR_OPTIONS)[number]
+  >(COLOR_OPTIONS[0]);
   const user = useUserStore((state) => state.user);
 
   const {
@@ -50,7 +52,7 @@ export default function ProjectDialog({
         onSuccess: () => {
           setName('');
           setDescription('');
-          setSelectedColor(colorOptions[0]);
+          setSelectedColor(COLOR_OPTIONS[0]);
           onOpenChange(false);
         },
         onError: () => {
@@ -91,7 +93,7 @@ export default function ProjectDialog({
             <div className="space-y-2">
               <Label>프로젝트 색상</Label>
               <div className="flex flex-wrap gap-2">
-                {colorOptions.map((color) => (
+                {COLOR_OPTIONS.map((color) => (
                   <button
                     key={color}
                     type="button"
