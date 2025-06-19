@@ -8,8 +8,6 @@
 ## Preview
 ![taskure](https://github.com/user-attachments/assets/b8e33f7b-ddfc-430d-9124-51db531b387b)
 
-> 직관적인 UI와 실시간 동기화로 생산성을 높이세요.
-
 ---
 
 ## 주요 기능
