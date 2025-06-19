@@ -1,80 +1,85 @@
-import { Task, TimeRange } from '@/types';
 import { useMemo, useState } from 'react';
+import { Task, FilterStatus, FilterPriority } from '@/types';
 
-interface useTaskStatsProps {
-  tasks: Task[];
-}
-
-export default function useTaskStats({ tasks }: useTaskStatsProps) {
-  const [timeRange, setTimeRange] = useState<TimeRange>('all');
+export default function useTaskStats({ tasks }: { tasks: Task[] }) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<FilterStatus>('all');
+  const [priorityFilter, setPriorityFilter] = useState<FilterPriority>('all');
+  const [projectFilter, setProjectFilter] = useState<string>('all');
+  const [sortField, setSortField] = useState<'dueDate' | 'createdAt'>(
+    'createdAt'
+  );
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
 
   const filteredTasks = useMemo(() => {
-    const now = new Date();
-
-    const today = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate()
-    ).getTime();
-
-    const startOfWeek = new Date(now);
-    startOfWeek.setDate(now.getDate() - now.getDay());
-    startOfWeek.setHours(0, 0, 0, 0);
-    const startOfWeekTime = startOfWeek.getTime();
-
-    const startOfMonth = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      1
-    ).getTime();
-
-    switch (timeRange) {
-      case 'today':
-        return tasks.filter((task) => task.createdAt >= today);
-      case 'week':
-        return tasks.filter((task) => task.createdAt >= startOfWeekTime);
-      case 'month':
-        return tasks.filter((task) => task.createdAt >= startOfMonth);
-      case 'all':
-      default:
-        return tasks;
-    }
-  }, [tasks, timeRange]);
-
-  const totalTasks = filteredTasks.length;
-  const completedTasks = filteredTasks.filter(
-    (task) => task.status === 'done'
-  ).length;
-  const inProgressTasks = filteredTasks.filter(
-    (task) => task.status === 'in-progress'
-  ).length;
-  const todoTasks = filteredTasks.filter(
-    (task) => task.status === 'todo'
-  ).length;
-
-  const completionRate =
-    totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-
-  const upcomingDeadlines = useMemo(() => {
-    return filteredTasks
-      .filter((task) => task.dueDate && new Date(task.dueDate) > new Date())
-      .sort(
-        (a, b) =>
-          new Date(a.dueDate ?? 0).getTime() -
-          new Date(b.dueDate ?? 0).getTime()
+    return tasks
+      .filter((task) =>
+        statusFilter === 'all' ? true : task.status === statusFilter
       )
-      .slice(0, 2);
-  }, [filteredTasks]);
+      .filter((task) =>
+        priorityFilter === 'all' ? true : task.priority === priorityFilter
+      )
+      .filter((task) =>
+        projectFilter === 'all' ? true : task.projectId === projectFilter
+      )
+      .filter((task) =>
+        searchQuery.trim() === ''
+          ? true
+          : task.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        const fieldA = a[sortField];
+        const fieldB = b[sortField];
+
+        if (fieldA === fieldB) return 0;
+
+        return sortDirection === 'asc'
+          ? fieldA > fieldB
+            ? 1
+            : -1
+          : fieldA < fieldB
+          ? 1
+          : -1;
+      });
+  }, [
+    tasks,
+    statusFilter,
+    priorityFilter,
+    projectFilter,
+    searchQuery,
+    sortField,
+    sortDirection,
+  ]);
+
+  const handleSort = (field: keyof Task) => {
+    if (field !== 'dueDate' && field !== 'createdAt') return;
+
+    if (field === sortField) {
+      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
 
   return {
-    timeRange,
-    setTimeRange,
+    setIsAddTaskOpen,
+    isAddTaskOpen,
+    searchQuery,
+    setSearchQuery,
+    statusFilter,
+    setStatusFilter,
+    priorityFilter,
+    setPriorityFilter,
+    projectFilter,
+    setProjectFilter,
+    handleSort,
+    sortField,
+    sortDirection,
+    selectedTask,
+    setSelectedTask,
     filteredTasks,
-    totalTasks,
-    completedTasks,
-    inProgressTasks,
-    todoTasks,
-    completionRate,
-    upcomingDeadlines,
   };
 }

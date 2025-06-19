@@ -1,5 +1,5 @@
 'use client';
-import { useAuthReadyStore, useUserStore } from '@/lib/store';
+import { useAuthReadyStore, useUserStore } from '@/lib/store/index';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { useEffect } from 'react';
@@ -7,7 +7,7 @@ import { auth, db } from '@/lib/firebase/firebase';
 
 export default function AuthProvider() {
   const setUser = useUserStore((state) => state.setUser);
-  const clearUser = useUserStore((state) => state.clearUser);
+  const clearUser = useUserStore((state) => state.clearUserSession);
   const setAuthReady = useAuthReadyStore((state) => state.setAuthReady);
 
   useEffect(() => {

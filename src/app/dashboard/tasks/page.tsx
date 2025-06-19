@@ -7,7 +7,7 @@ import TasksTableSection from '@/components/tasks/TasksTableSection';
 import useProjects from '@/hooks/useProjects';
 import useTasks from '@/hooks/useTasks';
 import useTaskStats from '@/hooks/useTaskStats';
-import { useUserStore } from '@/lib/store';
+import { useUserStore } from '@/lib/store/index';
 
 export default function AllTasksPage() {
   const user = useUserStore((state) => state.user);
@@ -39,8 +39,6 @@ export default function AllTasksPage() {
     setSelectedTask,
     isAddTaskOpen,
   } = useTaskStats({ tasks: tasks });
-
-  console.log('selectedTask', selectedTask);
 
   return (
     <div className="space-y-6">

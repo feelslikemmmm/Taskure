@@ -7,13 +7,10 @@ import TimeLineSection from '@/components/dashboard/TimeLineSection';
 import useProjects from '@/hooks/useProjects';
 import useTasks from '@/hooks/useTasks';
 import useDashboardStats from '@/hooks/useDashboardStats';
-import { useUserStore } from '@/lib/store';
+import { useUserStore } from '@/lib/store/index';
 import { TimeRange } from '@/types';
-import { useState } from 'react';
 
 export default function DashboardPage() {
-  // const [timeRange, setTimeRange] = useState<TimeRange>('all');
-
   const user = useUserStore((state) => state.user);
 
   const {
@@ -40,8 +37,6 @@ export default function DashboardPage() {
     setTimeRange(range);
   };
 
-  console.log('filteredTasks', filteredTasks);
-
   return (
     <div className="space-y-6">
       <Overview
@@ -50,16 +45,16 @@ export default function DashboardPage() {
       />
       <SummarySection
         totalTasks={totalTasks}
-        completedTasks={completedTasks}
+        completedTasks={completedTasks.length}
+        inProgressTasks={inProgressTasks.length}
+        todoTasks={todoTasks.length}
         completionRate={completionRate}
-        inProgressTasks={inProgressTasks}
-        todoTasks={todoTasks}
       />
       <StatusSection
-        completedTasks={completedTasks}
+        completedTasks={completedTasks.length}
+        inProgressTasks={inProgressTasks.length}
+        todoTasks={todoTasks.length}
         completionRate={completionRate}
-        inProgressTasks={inProgressTasks}
-        todoTasks={todoTasks}
         totalTasks={totalTasks}
         projects={projects}
         tasks={filteredTasks}

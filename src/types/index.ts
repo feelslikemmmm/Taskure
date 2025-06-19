@@ -6,6 +6,14 @@ export interface Project {
   createdAt: number;
 }
 
+export type User = {
+  uid: string;
+  email: string;
+  displayName?: string;
+  photoURL?: string;
+  createdAt?: string;
+};
+
 export type Status = 'todo' | 'in-progress' | 'done';
 
 export type Priority = 'low' | 'medium' | 'high';

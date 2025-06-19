@@ -47,6 +47,7 @@ export default function ProjectDialog({
         description,
         color: selectedColor,
         createdAt: Date.now(),
+        userId: user?.uid ?? '',
       },
       {
         onSuccess: () => {
